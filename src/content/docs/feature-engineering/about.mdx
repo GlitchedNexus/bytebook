@@ -3,9 +3,41 @@ title: What is Feature Engineering?
 description: An introduction to feature engineering.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+Feature engineering is the process of using domain knowledge to select, modify, or create new features from raw data to improve the performance of machine learning models. It involves transforming data into a format that is more suitable for analysis and modeling.
+Effective feature engineering can significantly enhance the predictive power of models by providing them with more relevant and informative inputs. This process may include techniques such as normalization, encoding categorical variables, handling missing values, and creating interaction terms.
+Feature engineering is a critical step in the machine learning pipeline, as the quality and relevance of features can greatly influence the success of a model. It often requires a deep understanding of the data and the problem domain to identify the most useful features for a given task.
 
-## Further reading
+## Why is Feature Engineering Important?
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+In the context of machine learning, the quality of the features used to train a model can have a significant impact on its performance. Here are some reasons why feature engineering is important:
+
+- **Improved Model Performance**: Well-engineered features can lead to better model accuracy and generalization by providing more relevant information for the learning algorithm.
+- **Reduced Overfitting**: By selecting and creating features that are more representative of the
+  underlying patterns in the data, feature engineering can help reduce overfitting and improve model robustness.
+- **Enhanced Interpretability**: Creating meaningful features can make models easier to interpret and understand, which is particularly important in fields like healthcare and finance.
+- **Dimensionality Reduction**: Feature engineering can help reduce the number of features, making
+  models more efficient and faster to train.
+
+## Common Feature Engineering Techniques
+
+There are various techniques used in feature engineering, depending on the nature of the data and the specific problem being addressed. Some common techniques include:
+
+- **Normalization and Scaling**: Adjusting the range of features to ensure they are on a similar scale.
+- **Encoding Categorical Variables**: Converting categorical data into numerical format using techniques like one-hot encoding or label encoding.
+- **Handling Missing Values**: Imputing or removing missing data to ensure the dataset is complete.
+- **Creating Interaction Terms**: Combining features to capture relationships between them.
+- **Binning**: Grouping continuous variables into discrete intervals.
+- **Feature Selection**: Identifying and retaining only the most relevant features for the model.
+-
+
+## Tools for Feature Engineering
+
+Several tools and libraries can assist with feature engineering tasks. Some popular options include:
+
+- **Pandas**: A powerful Python library for data manipulation and analysis, providing various functions for feature engineering.
+- **Scikit-learn**: A machine learning library in Python that includes tools for preprocessing and feature extraction.
+- **Feature-engine**: A Python library specifically designed for feature engineering tasks.
+- **Category Encoders**: A library that provides various encoding techniques for categorical variables.
+- **TSFresh**: A library for automated feature extraction from time series data.
+
+For our purposes, we will primarily use Pandas and Scikit-learn for feature engineering tasksin Python.
