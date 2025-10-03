@@ -3,9 +3,53 @@ title: CSV Files
 description: A guide for loading data from CSV files.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+import { Code } from "@astrojs/starlight/components";
 
-## Further reading
+One of the most common formats for storing tabular data is CSV (Comma-Separated Values).
+CSV files are plain text files that use commas to separate values, making them easy to read and write.
+They are widely supported by various software applications, including spreadsheet programs like Microsoft Excel and Google Sheets.
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+## Loading CSV Files
+
+For Python projects it's often simpler and more powerful to use pandas for CSV handling.
+Pandas reads CSVs directly into DataFrame objects which make data inspection and manipulation easy.
+
+For this guide we will assume that we have a CSV file named `data.csv` located in a `data` directory within our project.
+
+Let&apos;s take a look at a simple example of how to read a CSV file using pandas:
+
+export const exampleCode = `import pandas as pd\n\n# Read CSV into a DataFrame\n# (pandas will infer types and use the first row as headers by default)\ndf = pd.read_csv('data/data.csv')\n\n# Show the DataFrame\nprint(df)\n\n# Iterate rows if you need row-by-row processing\nfor index, row in df.iterrows():\n    print(row.to_dict())\n`;
+
+export const fileName = "loader.py";
+export const highlights = [];
+
+<Code lang="python" code={exampleCode} title={fileName} mark={highlights} />
+
+The above code demonstrates reading a CSV into a DataFrame and iterating over rows.
+Adjust the file path to match your project layout. Pandas also provides convenience methods for inspecting the data (e.g., `df.head()`, `df.info()`, `df.describe()`).
+
+## Handling Alternate Delimiters
+
+Sometimes CSV files may use alternate delimiters other than commas, such as tabs or semicolons.
+If your CSV uses a different delimiter (for example, semicolons), you can pass the `sep` argument to `pd.read_csv`
+to specify the delimiter as shown below:
+
+export const delimiterExample = `import pandas as pd\n\n# Read CSV with semicolon delimiter\ndf = pd.read_csv('data/data.csv', sep=';')\nprint(df)\n`;
+
+<Code lang="python" code={delimiterExample} title={"delimiter.py"} mark={[]} />
+
+## Handling CSV without Headers
+
+Pandas uses the first row as column names by default. You can control header behavior with the `header` and `names` parameters. For example, if your CSV file does not have a header row, you can set `header=None` and provide column names using the `names` parameter:
+
+export const headerExample = `import pandas as pd
+
+# Read CSV using the first row as header\ndf = pd.read_csv('data/data.csv', header=0)
+
+# If the CSV has no header row, provide column names explicitly\ndf_no_header = pd.read_csv('data/data.csv',\n\theader=None,\n\tnames=['col1', 'col2', 'col3']\n)\nprint(df_no_header)
+
+`;
+
+<Code lang="python" code={headerExample} title={"header.py"} mark={[]} />
+
+You can also use the `names` parameter to assign custom column names when the CSV has a header row but you want to override them.

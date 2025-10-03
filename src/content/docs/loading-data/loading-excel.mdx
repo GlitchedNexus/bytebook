@@ -3,9 +3,61 @@ title: Excel Files
 description: A guide for loading data from Excel files.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+import { Code } from "@astrojs/starlight/components";
 
-## Further reading
+Excel files are used extensively for storing and sharing tabular data. They can contain multiple sheets, each with its own set of rows and columns.
+Excel files can be in various formats, with the most common being `.xls` and `.xlsx`.
+To work with Excel files in Python, we can use libraries such as `pandas` or `openpyxl`.
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+## Loading Excel Files
+
+To load data from an Excel file, we will use the `pandas` library, which provides a simple and efficient way to read Excel files into DataFrames.
+
+For this guide, we will assume that we have an Excel file named `data.xlsx` located in a `data` directory within our project.
+
+export const exampleCode = `import pandas as pd
+# Read Excel file into a DataFrame\n# (pandas will infer types and use the first row as headers by default)\ndf = pd.read_excel('data/data.xlsx', sheet_name='Sheet1')\n\n# Show the DataFrame\nprint(df)\n\n# Iterate rows if you need row-by-row processing\nfor index, row in df.iterrows():\n    print(row.to_dict())\n`;
+export const fileName = "loader.py";
+export const highlights = [];
+
+<Code lang="python" code={exampleCode} title={fileName} mark={highlights} />
+
+## Reading Specific Sheets
+
+Often times, Excel files contain multiple sheets.
+You can specify which sheet to read using the `sheet_name` parameter in `pd.read_excel()`.
+You can provide the sheet name as a string or the sheet index (0-based).
+
+export const sheetExample = `import pandas as pd
+
+# Read specific sheet by name\ndf_sheet1 = pd.read_excel('data/data.xlsx', sheet_name='Sheet1')\nprint(df_sheet1)
+
+# Read specific sheet by 0-based index\ndf_sheet2 = pd.read_excel('data/data.xlsx', sheet_name=1)\nprint(df_sheet2)
+
+`;
+
+<Code lang="python" code={sheetExample} title={"sheets.py"} mark={[]} />
+
+## Handling Missing Headers
+
+If your Excel file does not have headers, you can set the `header` parameter to `None` when reading the file.
+This will assign default integer headers (0, 1, 2, ...) to the columns.
+
+export const noHeaderExample = `import pandas as pd
+
+# Read Excel file without headers\ndf_no_header = pd.read_excel('data/data_no_header.xlsx', header=None)\nprint(df_no_header)`;
+
+<Code lang="python" code={noHeaderExample} title={"no_header.py"} mark={[]} />
+
+While you can let pandas assign default integer headers, you can also provide your own custom column names using the `names` parameter.
+
+export const noHeaderCustomNamesExample = `import pandas as pd
+
+# Read Excel file with custom headers\ndf_custom_header = pd.read_excel('data/data_no_header.xlsx',\n\theader=None,\n\tnames=['A', 'B', 'C']\n)\n\nprint(df_custom_header)`;
+
+<Code
+  lang="python"
+  code={noHeaderCustomNamesExample}
+  title={"no_header_custom_names.py"}
+  mark={[]}
+/>

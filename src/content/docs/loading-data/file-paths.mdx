@@ -3,9 +3,77 @@ title: File Paths
 description: An guide on navigating file trees.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+import { FileTree } from "@astrojs/starlight/components";
 
-## Further reading
+Before loading data from files, we must know where to find them. Two types of file paths are commonly used: absolute and relative.
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+## Absolute File Paths
+
+An absolute file path is a complete path from the root of the file system to the desired file. It provides the full directory structure needed to locate the file, regardless of the current working directory. Absolute paths are useful when you need to ensure that you're accessing the correct file, but they can be cumbersome to work with, especially if the file is deeply nested.
+
+Example of an absolute file path:
+
+```
+/Users/username/Documents/project/data/file.csv
+```
+
+Let's visualize a simple file tree:
+
+<FileTree>
+
+- Users
+  - username
+    - Documents
+      - project
+        - data
+          - **file.csv**
+  - otheruser
+    - Downloads
+      - image.png
+
+</FileTree>
+
+As we can see above, the absolute path to `file.csv` starts from the root directory `/` and goes through each folder until it reaches the file.
+This path will always point to the same file, regardless of where we are in the file system.
+The primary drawbacks of absolute paths are their length and the fact that they can change if the file is moved to a different location.
+To ensure that our code works on other people's computers, we often avoid using absolute paths as they would need to organize their file structure in the same way which is not practical.
+To counter this we often use relative paths.
+
+## Relative File Paths
+
+A relative file path describes the location of a file in relation to the current working directory. It is shorter and more convenient to use when working within a specific project or directory structure. However, relative paths can lead to confusion if the current working directory changes.
+
+Let's visualize the same file tree, but this time we will assume our current working directory is `project`:
+
+<FileTree>
+
+- Users
+  - username
+    - Documents
+      - project \<\- we are here
+        - data
+          - **file.csv**
+  - otheruser
+    - Downloads
+      - image.png
+
+</FileTree>
+
+In this case, the relative path to `file.csv` from the `project` directory is simply:
+
+```
+data/file.csv
+```
+
+This path is shorter and easier to read, but it only works when the current working directory is `project`.
+If we were to change our current working directory to `Documents`, the relative path to `file.csv` would change to:
+
+```
+../project/data/file.csv
+```
+
+Here, `..` indicates that we need to go up one level in the directory structure before navigating down to `file.csv`.
+Relative paths are more flexible and easier to manage within a project, but they require careful attention to the current working directory to avoid errors.
+
+In summary, absolute paths provide a fixed location for files, while relative paths offer flexibility within a specific context.
+Understanding when to use each type of path is crucial for effective file management in programming.
