@@ -35,6 +35,10 @@ export default defineConfig({
           autogenerate: { directory: "data-visualization" },
         },
         {
+          label: "Feature Engineering",
+          autogenerate: { directory: "feature-engineering" },
+        },
+        {
           label: "Classification",
           autogenerate: { directory: "classification" },
         },
