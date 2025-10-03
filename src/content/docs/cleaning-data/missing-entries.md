@@ -1,6 +1,6 @@
 ---
-title: Feature Aggregation
-description: An introduction to feature aggregation.
+title: Missing Entries
+description: An guide on dealing with missing entries.
 ---
 
 Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
