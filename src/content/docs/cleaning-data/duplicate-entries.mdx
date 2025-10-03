@@ -3,9 +3,62 @@ title: Duplicate Entries
 description: An guide on dealing with duplicate entries.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+import { Code } from "@astrojs/starlight/components";
 
-## Further reading
+Often times you will find that once you have loaded your data, there are duplicate entries that need to be removed.
+Duplicate entries can occur for a variety of reasons, such as data entry errors, merging datasets, or data collection issues.
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+Since we load our data into a pandas DataFrame, we can use the built-in methods to identify and remove duplicate entries.
+
+## Identifying Duplicate Entries
+
+To identify duplicate entries in a DataFrame, we can use the `duplicated()` method, which returns a boolean Series indicating whether each row is a duplicate.
+
+export const exampleCode = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Identify duplicate entries\nduplicates = df[df.duplicated()]\nprint(duplicates)`
+
+<Code
+  lang="python"
+  code={exampleCode}
+  title={"identify_duplicates.py"}
+  mark={[]}
+/>
+
+## Removing Duplicate Entries
+
+To remove duplicate entries from a DataFrame, we can use the `drop_duplicates()` method, which returns a new DataFrame with duplicates removed.
+
+export const removeDuplicatesCode = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Remove duplicate entries\ndf_cleaned = df.drop_duplicates()\nprint(df_cleaned)`
+
+<Code
+  lang="python"
+  code={removeDuplicatesCode}
+  title={"remove_duplicates.py"}
+  mark={[]}
+/>
+
+By default, `drop_duplicates()` keeps the first occurrence of each duplicate entry and removes subsequent occurrences. You can change this behavior by using the `keep` parameter, which can be set to `'first'`, `'last'`, or `False` (to remove all duplicates).
+
+## Removing Duplicates for Specific Columns
+
+Sometimes you may only want to remove duplicates based on specific columns. Pandas allows you to specify which columns to consider when identifying duplicates by using the `subset` parameter.
+
+export const subsetExample = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Remove duplicate entries based on specific columns\ndf_cleaned = df.drop_duplicates(subset=['column1', 'column2'])\nprint(df_cleaned)`
+
+<Code
+  lang="python"
+  code={subsetExample}
+  title={"remove_duplicates_subset.py"}
+  mark={[]}
+/>

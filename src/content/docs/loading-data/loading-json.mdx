@@ -13,6 +13,8 @@ It is widely used for data storage and communication between web applications an
 
 To load JSON files in Python, we can use the `pandas` library, which provides a convenient way to read JSON data into DataFrame objects for easy data manipulation and analysis.
 
+For this guide we will assume you have a JSON file named `data.json` stored in a `data` directory of your project:
+
 export const exampleCode = `import pandas as pd
 
 # Load JSON data into a DataFrame\ndf = pd.read_json('data/data.json')\nprint(df)\n\n# Access specific fields\nfor index, row in df.iterrows():\n\tprint(row['name'], row['age'])`;

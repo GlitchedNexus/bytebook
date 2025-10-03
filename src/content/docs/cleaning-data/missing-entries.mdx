@@ -3,9 +3,90 @@ title: Missing Entries
 description: An guide on dealing with missing entries.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+import { Code } from "@astrojs/starlight/components";
 
-## Further reading
+Often times, datasets will have missing entries. This can be due to a variety of reasons,
+such as data corruption, incomplete data collection, or intentional omission.
+Handling these missing entries is crucial for accurate data analysis and modeling.
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+Since we are using pandas, we can take advantage of its built-in functions to handle missing data.
+
+## Identifying Missing Data
+
+Pandas provides several functions to identify missing data. The most common ones are `isnull()` and `notnull()`.
+
+export const identifyMissingCode = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Identify missing entries\nmissing = df[df.isnull().any(axis=1)]\nprint(missing)`
+
+<Code
+  lang="python"
+  code={identifyMissingCode}
+  title={"identify_missing.py"}
+  mark={[]}
+/>
+
+The `isnull()` function returns a DataFrame of the same shape as the original,
+but with boolean values indicating whether each entry is missing (True) or not (False).
+
+## Handling Missing Data
+
+There are several strategies to handle missing data, including:
+
+1. **Removing Missing Data**: You can remove rows or columns with missing data using the `dropna()` method.
+2. **Filling Missing Data**: You can fill missing data with a specific value or a computed value (like mean, median, etc.) using the `fillna()` method.
+
+### Removing Missing Data
+
+export const removeMissingCode = `import pandas as pd
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Remove rows with missing data\ndf_cleaned = df.dropna()\nprint(df_cleaned)`
+
+<Code
+  lang="python"
+  code={removeMissingCode}
+  title={"remove_missing.py"}
+  mark={[]}
+/>{" "}
+
+By default, `dropna()` removes any row with at least one missing value.
+You can change this behavior by using the `how` parameter, which can be set to `'any'` (default) or `'all'`.
+If you set it to `'all'`, only rows with all values missing will be removed.
+
+### Filling Missing Data
+
+Pandas provides the `fillna()` method to fill missing data with a specific value or a computed value of your choice. For example, to fill missing values with a specific value (e.g., 0):
+
+export const fillMissingCode = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Fill missing data with a specific value\ndf_filled = df.fillna(0)\nprint(df_filled)`
+
+<Code
+  lang="python"
+  code={fillMissingCode}
+  title={"fill_missing.py"}
+  mark={[]}
+/>
+
+You can also fill missing data with computed values. For example, to fill missing values with the mean of the column:
+
+export const fillWithMeanCode = `import pandas as pd
+
+# Load data into a DataFrame\ndf = pd.read_csv('data/data.csv')
+
+# Fill missing data with the mean of the column\ndf_filled = df.fillna(df.mean())\nprint(df_filled)`;
+
+<Code
+  lang="python"
+  code={fillWithMeanCode}
+  title={"fill_with_mean.py"}
+  mark={[]}
+/>
+
+This will replace all missing values in the DataFrame with the mean of their respective columns.
+You can also use other statistical measures like median or mode, depending on your data and analysis needs.
