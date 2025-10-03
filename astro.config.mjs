@@ -2,17 +2,19 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import catppuccin from "@catppuccin/starlight";
+// import { ion } from "starlight-ion-theme";
+// import starlightThemeFlexoki from "starlight-theme-flexoki";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     starlight({
-      title: "My Docs",
+      title: "ByteBook",
       social: [
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/withastro/starlight",
+          href: "https://github.com/GlitchedNexus/bolt.github.io",
         },
       ],
       sidebar: [
@@ -49,7 +51,14 @@ export default defineConfig({
           autogenerate: { directory: "reference" },
         },
       ],
-      plugins: [catppuccin()],
+      plugins: [
+        catppuccin({
+          dark: { flavor: "mocha", accent: "mauve" },
+          light: { flavor: "latte", accent: "flamingo" },
+        }),
+        // ion(),
+        // starlightThemeFlexoki({ accentColor: "purple" }),
+      ],
     }),
   ],
 });
