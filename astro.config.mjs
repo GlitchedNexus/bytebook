@@ -9,7 +9,7 @@ import catppuccin from "@catppuccin/starlight";
 export default defineConfig({
   integrations: [
     starlight({
-      title: "ByteBook",
+      title: "Lightning Labs",
       social: [
         {
           icon: "github",
